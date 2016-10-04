@@ -1,0 +1,58 @@
+.mrow
+{
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 0px 0px 2px 2px;
+}
+
+.dot_line
+{
+ border-bottom: 1px dotted #ccc;
+}
+
+.bgcol_but
+{
+  background: #363018;
+}
+
+textarea {min-height:100px; margin:0px; padding:0px; resize:none; overflow:hidden;}
+
+th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+th .asc {
+  background-image: url(/images/down_arrow.gif);
+}
+
+th .desc {
+  background-image: url(/images/up_arrow.gif);
+}
+
+th {
+  font-size:8pt;
+  font-face:verdana;
+  font-weight:bold;
+  background-color: #AAAAAA;
+  text-align:center;
+}
+
+.new {
+  font: bold 15pt;
+  font-weight: bold;
+  font-family: verdana, arial, helvetica, sans-serif;
+}
+
+.end {
+   color: grey;
+}
+
+td .smallcol {
+  font-size: 10pt;
+} 
+
+.sclist{ background-color: #FFFFFF}
+.dclist{ background-color: #F6F5F2}
+

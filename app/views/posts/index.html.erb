@@ -1,0 +1,60 @@
+<%= form_tag posts_path, :method => 'get' do %>
+<div class="row display">
+ <div class="small-3 columns">
+  <h4>Список отчётов</h4>
+ </div>
+  <div class="small-3 columns">
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, sort_column %>
+        <input name="search" size="20" type="text" value=<%=params[:search]%>>
+   </div>
+   <div class="small-3 columns">
+          <%= submit_tag "Найти", :name => nil %>
+   </div>
+ <div class="small-3 columns">
+  <%= link_to 'Новый отчёт', new_post_path({:ref=>posts_path}), class: "button radius"  %>
+ </div>
+</div>
+<div class="row display">
+ <div class="small-2 columns">
+Дата c <input type="text" name=d1 class="datepicker" value="<%=@d1%>">
+ </div>
+ <div class="small-2 columns">
+по <input type="text" name=d2 class="datepicker" value="<%=@d2%>">
+ </div>
+ <div class="small-8 columns">&nbsp;</div>
+</div>
+<% end %>
+
+
+  <%= will_paginate @posts %><br>
+<table width=100%>
+  <tr>
+    <th><%= sortable "wobj_name","Наименование объекта"%></th>
+    <th><%= sortable "chif_name","Руководитель"%></th>
+    <th><%= sortable "brigada","Состав бригады"%></th>
+    <th><%= sortable "text","Наименование работ"%></th>
+    <th><%= sortable "amount","Количество"%></th>
+  </tr>
+<% curstaff = curdate = ""
+   @posts.each do |post|
+     pd = post.created_at.strftime("%F")
+   %>
+  <tr>
+    <%=  if curdate!=pd || curstaff!=post.staff_id
+           curdate = pd
+           curstaff = post.staff_id
+           "<td colspan=5>Отчет по выполненным работам за #{pd} подготовил #{post.staff_name}</td></tr><tr>".html_safe
+         end
+       %>
+    <td><%= link_to post.wobj_name, workobject_path(post.workobject_id) %></td>
+    <td><%= link_to post.chif_name, staff_path(post.chif_id) %></td>
+    <td><%= trbr post.brigada %></td>
+    <td><%= trbr post.text %></td>
+    <td><%= trbr post.amount %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

@@ -1,0 +1,44 @@
+<% if flash[:error] %>
+    <div id="error_explanation"><h2><%= flash[:error] %></h2></div>
+<% end %>
+<p id="notice"><%= notice %></p>
+<div class="row display">
+  <div class="small-3 columns">
+    <h4><%= params[:address].nil? ? "Все склады" : params[:address]%></h4>
+  </div>
+  <div class="small-3 columns">
+    <%= form_tag storages_path, :method => 'get' do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <%= hidden_field_tag :address, params[:address] %>
+        <input name="search" size="20" type="text" value=<%=params[:search]%>>
+        </div>
+        <div class="small-3 columns">
+          <%= submit_tag "Найти", :name => nil %>
+    <% end %>
+    </div>
+    <div class="small-3 columns">
+      <%= link_to 'Добавить запись', new_storage_path("storage[address]"=> params[:address]), class: "button radius" %>
+    </div>
+  </div>
+<%= will_paginate @storages %><br>
+<table>
+  <tr>
+    <th width=7%><%= sortable "id", "№ п/п" %></th>
+    <th width=38%><%= sortable "name", "Наименование" %></th>
+    <th width=15%><%= sortable "address", "Адрес" %></th>
+    <th width=6%><%= sortable "unit", "Ед. изм." %></th>
+    <th width=6%><%= sortable "mass", "Кол-во" %></th>
+  </tr>
+<% @storages.each do |storage| %>
+  <tr class="<%= cycle :sclist, :dclist %>">
+    <td width=7% ><%= storage.id %></td>
+    <td width=38% ><%= link_to storage.name, storage %></td>
+    <td width=15% ><%= storage.address %></td>
+    <td width=6% align=center><%= storage.unit %></td>
+    <td width=6% align=center><%= storage.mass %></td>
+<td width=5%><%= link_to tag("img", { :src => "/images/button_edit.gif", :title =>'Edit', :alt=>'Edit',:border=>0,:size=>"17x17"}, false) , edit_storage_path(storage) %>
+          <%= link_to tag("img", { :src => "/images/button_drop.gif", :title =>'Destroy', :alt=>'Destroy',:border=>0}, false), storage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>

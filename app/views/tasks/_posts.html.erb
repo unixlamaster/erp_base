@@ -1,0 +1,69 @@
+<fieldset>
+    <legend><h4>Комментарии</h4></legend>
+
+
+<table width=100%>
+  <tr><th width=10%>Дата</th><th width=60%>Текст</th><th width=30%>Файлы</th></tr>
+
+
+<% @date_po_up.each do |dd|
+  %>
+  <tr>
+    <td width=10%><%= dd.dd %></td>
+    <td>
+     <% @task_posts.where("date(created_at)=?",dd.dd).each do |pp| %>
+       <p><%=pp.text%><br><b> =<%= Staff.find(pp.staff_id).lname if Staff.exists?(pp.staff_id) %></b></p>
+     <% end %>
+    </td>
+    <td>
+      <% @task_uploads.where("date(created_at)=?",dd.dd).each do |up| %>
+        <img src=/paper-clip.png>
+        <a href=/uploads/<%=up.id%>><%= up.filename%></a> <%= (up.size.to_i/1024).to_i %>Kb</br>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+
+<div id=addpost style="display:none">
+
+<%= form_for(@post) do |f| %>
+  <div class="field">
+    <b>Текст</b>
+    <%= f.text_area :text, cols: 40, rows: 20%>
+  </div>
+  <div class="actions">
+    <%= f.submit "Добавить" %>
+  </div> 
+  <div>
+   <a href=# onclick="addpost.style.display='none'" class=slist ><b>Отмена</b></a>
+  </div>
+  <%= hidden_field_tag :ref, "/tasks/#{params[:id]}" %>
+  <%= f.hidden_field :task_id, :value=> params[:id]%>
+ <% end %>
+</div>
+
+<div id=addfile  style="display:none">
+<%= form_for(@upload) do |f| %>
+
+  <div class="field">
+    <b>Выберите файл</b><br />
+    <%= f.file_field :filename %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Upload" %>
+  </div>
+  <div>
+   <a href=# onclick="addfile.style.display='none'" class=slist ><b>Отмена</b></a>
+  </div>
+  <%= hidden_field_tag :ref, "/tasks/#{params[:id]}" %>
+  <%= f.hidden_field :task_id, :value=>params[:id]%>
+  <%= hidden_field_tag :flag, "ts"%>
+ <% end %>
+</div>
+
+<a href=# onclick="addpost.style.display='';addfile.style.display='none';"  class="button radius">Добавить комментарий</a>
+<a href=# onclick="addfile.style.display='';addpost.style.display='none'"  class="button radius">Добавить файл</a>
+</fieldset>

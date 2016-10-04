@@ -1,0 +1,65 @@
+<% if flash[:error] %>
+    <div id="error_explanation"><h2><%= flash[:error] %></h2></div>
+<% end %>
+<p id="notice"><%= notice %></p>
+<div class="row display">
+  <div class="small-3 columns">
+    <h4>Список контрактов</h4>
+  </div>
+  <div class="small-3 columns">
+    <%= form_tag storages_path, :method => 'get' do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <%= hidden_field_tag :address, params[:address] %>
+        <input name="search" size="20" type="text" value=<%=params[:search]%>>
+        </div>
+        <div class="small-3 columns">
+          <%= submit_tag "Найти", :name => nil %>
+    <% end %>
+    </div>
+    <div class="small-3 columns">
+      <%= link_to 'Добавить контракт', new_contract_path, class: "button radius" %>
+    </div>
+  </div>
+<%= will_paginate @contracts %><br>
+
+<table width=100%>
+  <tr>
+    <th><%= sortable "id","№"%></th>
+    <th><%= sortable :region, "Регион"%></th>
+    <th><%= sortable :client, "Заказчик"%></th>
+    <th><%= sortable :name, "Наименование договора"%></th>
+    <th>№ и дата договора</th>
+    <th><%= sortable :staff_id, "Ответственный"%></th>
+    <th>Объект</th>
+    <th>Исполнитель</th>
+    <th>Статус</th>
+    <th></th>
+  </tr>
+
+<% @contracts.each do |contract| %>
+  <tr>
+    <td><%= link_to contract.id, uploads_path({:flag=>"co","upload[contract_id]"=>contract.id}) %></td>
+    <td><%= link_to contract.region, uploads_path({:flag=>"co","upload[contract_id]"=>contract.id}) %></td>
+    <td><%= link_to contract.client, uploads_path({:flag=>"co","upload[contract_id]"=>contract.id}) %></td>
+    <td><%= link_to contract.name, uploads_path({:flag=>"co","upload[contract_id]"=>contract.id}) %></td>
+    <td><%= contract.c_number %> от <%= contract.c_date %></td>
+    <td><%= contract.staff.fullname unless contract.staff_id.nil? %></td>
+    <td colspan=3><table width=100%>
+<%    ContractWoJobhands.where(contract_id: contract.id).each do |c_wo_j|
+ %>
+      <tr><td width=45%><%= link_to c_wo_j.workobject.name, contracts_edit_wo_path({:id=>c_wo_j.id}) %></td>
+          <td width=30%><%= c_wo_j.job_hands %></td>
+          <td width=20%><%= workobject_status_hash[c_wo_j.status] %></td>
+          <td width=5%><%= link_to  tag("img", { :src => "/images/button_drop.gif", :title =>'Destroy', :alt=>'Destroy',:border=>0}, false), contracts_del_wo_path({:c_id=>c_wo_j.id}) %></td>
+      </tr>
+<%    end %>
+      </table>
+      <%= link_to "+", contracts_new_wo_path({:c_id=>contract.id}) %>
+    </td>      
+    <td>
+    <%= link_to  tag("img", { :src => "/images/button_edit.gif", :title =>'Edit', :alt=>'Edit',:border=>0,:size=>"17x17"}, false), edit_contract_path(contract) %>
+    <%= link_to  tag("img", { :src => "/images/button_drop.gif", :title =>'Destroy', :alt=>'Destroy',:border=>0}, false), contract, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>

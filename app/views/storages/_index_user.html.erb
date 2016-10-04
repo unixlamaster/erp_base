@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th width=7%><%= sortable "id", "№ п/п" %></th>
+    <th width=30%><%= sortable "name", "Наименование" %></th>
+    <th width=15%><%= sortable "unit", "Ед. изм." %></th>
+    <th width=15%><%= sortable "mass", "Кол-во" %></th>
+ </tr>
+<% @storages.each do |storage| %>
+  <tr>
+    <td width=7% ><%= storage.id %></td>
+    <td width=30% ><%= link_to storage.name, storage %></td>
+    <td width=15% ><%= storage.unit %></td>
+    <td width=15% ><%= storage.mass %></td>
+ </tr>
+<% end %>
+</table>

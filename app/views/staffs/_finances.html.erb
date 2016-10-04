@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+   <h4>Финансы</h4>
+<div class="row display">
+  <div class="small-4 columns">
+    <%= will_paginate @finances %>
+  </div>
+  <div class="small-4 columns">
+    <b>Сумма: <%=@fin_wo_sum%></b>
+  </div>
+  <div class="small-4 columns">
+  <%= link_to 'Добавить запись', new_finance_path("finance[staff_id]"=>params[:id]) %>
+  </div>
+</div>
+<table>
+  <tr>
+    <th><%= sortable "wo_full","Объект" %></th>
+    <th><%= sortable "cost_type","Тип" %></th>
+    <th><%= sortable "fin_item","Статья расходов" %></th>
+    <th><%= sortable "staff_item","Тип выплат" %></th>
+    <th><%= sortable "summa","Сумма" %></th>
+    <th><%= sortable "d1","Дата1" %></th>
+    <th><%= sortable "d2","Дата2" %></th>
+    <th><%= sortable "remark","Примечение" %></th>
+    <th><%= sortable "invoice","Счет/чек" %></th>
+    <th></th>
+  </tr>
+<% @finances.each do |finance| %>
+  <tr>
+    <td><%= finance.wo_full.nil? ? "" : link_to(finance.wo_full[0..40]<<"...", workobject_path(finance.wo_id)) %></td>
+    <td><%= finance.cost_type %></td>
+    <td><%= finance.fin_item %></td>
+    <td><%= finance.staff_item %></td>
+    <td><%= finance.summa %></td>
+    <td><%= finance.d1 %></td>
+    <td><%= finance.d2 %></td>
+    <td><%= finance.remark %></td>
+    <td><%= finance.invoice %></td>
+    <td><%= link_to tag("img", { :src => "/images/button_edit.gif", :title =>'Edit', :alt=>'Edit',:border=>0,:size=>"17x17"}, false) ,  edit_finance_path(finance.id) %>
+    <%= link_to tag("img", { :src => "/images/button_drop.gif", :title =>'Destroy', :alt=>'Destroy',:border=>0}, false), "finance.id", method: :delete, data: { confirm: 'Are you sure?'} %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,77 @@
+<%= form_for(@staff) do |f| %>
+  <% if @staff.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@staff.errors.count, "error") %> prohibited this staff from being saved:</h2>
+
+      <ul>
+      <% @staff.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="row">
+  <div class="large-6 columns">
+
+  <div class="field">
+    <b>Фамилия:</b>
+    <%= f.text_field :lname %>
+  </div>
+  <div class="field">
+    <b>Имя:</b>
+    <%= f.text_field :fname %>
+  </div>
+  <div class="field">
+    <b>Отчество:</b>
+    <%= f.text_field :mname %>
+  </div>
+  <div class="field">
+    <b>Должность:</b>
+    <%= f.text_field :position %>
+  </div>
+  <div class="field">
+  </div>
+  <div class="field">
+      <b>Статуc:</b><br>
+      <%= f.select :status, staff_status_array.each.collect {|value| [value,value]}%>
+    </div>
+  <div class="field">
+    <b>Дата рождения:</b><br>
+    <input type=text name="staff[birthday]" class="datepicker" value="<%=@staff.birthday%>">
+  </div>
+</div>
+  <div class="large-6 columns">
+  <div class="field">
+    <b>Паспорт:</b>
+    <%= f.text_field :passport %>
+  </div>
+  <div class="field">
+    <b>Email:</b>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <b>Phone:</b>
+    <%= f.text_field :phone1 %>
+  </div>
+  <div class="field">
+    <b>Login:</b>
+    <%= f.text_field :login%>
+  </div>
+  <div class="field">
+    <b>Password:</b>
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+     <% for role in Staff::ROLES %>
+         <%= check_box_tag "staff[roles][#{role}]", role, @staff.roles.include?(role), {:name => "staff[roles][]"}%>
+         <%= label_tag "staff_roles_#{role}", role.humanize %>
+     <% end %>
+     <%= hidden_field_tag "staff[roles][]", "" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</div>
+<% end %>

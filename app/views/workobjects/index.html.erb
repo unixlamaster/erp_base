@@ -1,0 +1,54 @@
+
+<div class="row display">
+  <div class="small-3 columns">
+    <h4>Список объектов</h4>
+  </div>
+  <div class="small-3 columns">
+    <%= form_tag workobjects_path, :method => 'get' do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <input name="search" size="20" type="text" value=<%=params[:search]%>>
+        </div>
+        <div class="small-3 columns">
+          <%= submit_tag "Найти", :name => nil %>
+    <% end %>
+    </div>
+    <div class="small-3 columns">
+      <%= link_to 'Добавить объект', new_workobject_path, class: "button radius" %>
+    </div>
+    </div>
+<%= will_paginate @workobjects %><br>
+<% if flash[:error] %>
+<div id="error_explanation"><h2><%= flash[:error] %></h2></div>
+<% end %>
+<table>
+  <tr>
+    <th><%= sortable "wo_id","№" %></th>
+    <th><%= sortable "client","Заказчик" %></th>
+    <th><%= sortable "wo_name","Наименование Объекта" %></th>
+    <th><%= sortable "job","Вид работ" %></th>
+    <th><%= sortable "co_reg","Регион" %></th>
+    <th>Договор</th>   
+    <th><%= sortable "staff","Ответственное лицо" %></th>
+    <th><%= sortable "status","Статус" %></th>
+    <th></th>
+  </tr>
+
+  <% @workobjects.each do |workobject| %>
+      <tr class="<%= cycle :odd, :even %>">
+        <td><%= workobject.id %></td>
+        <td><%= workobject.client %></td>
+        <td><%= link_to workobject.wo_name, workobject_path(workobject) %></td>
+	<td><%= workobject.job %></td>
+	<td><%= workobject.co_reg %></td>
+	<td>№<%= workobject.c_number %> от <%= workobject.c_date %></td>
+        <td><%= workobject.staff %></td>
+        <td><%= workobject_status_hash[workobject.status] %></td>
+        <td width=7%><%= link_to tag("img", { :src => "/images/button_edit.gif", :title =>'Edit', :alt=>'Edit',:border=>0,:size=>"17x17"}, false) , edit_workobject_path(workobject) %>
+          <%= link_to tag("img", { :src => "/images/button_drop.gif", :title =>'Destroy', :alt=>'Destroy',:border=>0}, false), workobject_path(workobject), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br />
+

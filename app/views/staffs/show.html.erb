@@ -1,0 +1,35 @@
+<div class="row display">
+ <div class="small-6 columns">
+
+  <p id="notice"><%= notice %></p>
+  <fieldset>
+    <legend><h4>Сотрудник</h4></legend>
+
+       <p><b>Фамилия:</b> <%= @staff.lname %></p>
+
+       <p><b>Имя:</b> <%= @staff.fname %></p>
+
+       <p><b>Отчество:</b> <%= @staff.mname %></p>
+
+       <p><b>Должность:</b> <%= @staff.position %></p>
+
+       <p><b>Дата рождения:</b> <%= @staff.birthday %> </p>
+
+       <p><%= link_to 'Поменять пароль', staffs_edit_password_path({:id=>@staff.id}) %></p>
+       <%= link_to 'Edit', edit_staff_path(@staff) %> |
+       <%= link_to 'Back', staffs_path %>
+   </fieldset>
+
+ </div>
+ <div class="small-6 columns">
+   <%= render 'workobject' %>
+ </div>
+</div>
+
+ <% if current_staff.is? :finansist %>
+    <div class="row">
+      <div class="small-12 columns">
+        <%= render "finances" %>
+     </div>
+   </div>
+ <% end %>

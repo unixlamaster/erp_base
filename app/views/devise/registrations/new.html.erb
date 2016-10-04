@@ -1,0 +1,60 @@
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+<div class="row">
+  <div class="large-6 columns">
+
+  <div class="field">
+    <b>Фамилия:</b>
+    <%= f.text_field :lname %>
+  </div>
+  <div class="field">
+    <b>Имя:</b>
+    <%= f.text_field :fname %>
+  </div>
+  <div class="field">
+    <b>Отчество:</b>
+    <%= f.text_field :mname %>
+  </div>
+  <div class="field">
+    <b>Должность:</b>
+    <%= f.text_field :position %>
+  </div>
+  <div class="field">
+    <b>Дата рождения:</b>
+    <input type=date name="staff[birthday]" value=<%=@staff.birthday%> placeholder="large-2.columns">
+  </div>
+</div>
+  <div class="large-6 columns">
+  <div class="field">
+    <b>Паспорт:</b>
+    <%= f.text_field :passport %>
+  </div>
+  <div class="field">
+    <b>Email:</b>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <b>Phone:</b>
+    <%= f.text_field :phone1 %>
+  </div>
+  <div class="field">
+    <b>Login:</b>
+    <%= f.text_field :login%>
+  </div>
+    <div class="field">
+      <b>Admin:</b>
+      <%= f.check_box :admin%>
+    </div>
+  <div class="field">
+  <b><%= f.label :Пароль %></b><br />
+  <%= f.password_field :password %></div>
+
+  <div class="field"><%= f.label :Потверждение_пароля %><br />
+  <%= f.password_field :password_confirmation %></div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+</div>
+<% end %>

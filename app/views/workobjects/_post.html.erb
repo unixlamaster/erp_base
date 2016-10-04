@@ -1,0 +1,34 @@
+<div class="row display">
+ <div class="small-3 columns">
+  <h4>Отчеты</h4>
+ </div>
+ <div class="small-2 columns">
+  <a href=/posts/new?workobject_id=<%= params[:id]%>&ref=/workobjects/<%=params[:id]%>>Добавить Отчет</a>
+ </div>
+ <div class="small-7 columns">
+  <%= link_to "Добавить файл", new_upload_path({:flag=>"wo","upload[workobject_id]"=>params[:id], :ref=>"/workobjects/#{params[:id]}".html_safe}) %>
+ </div>
+</div>
+
+<table>
+  <tr><th>Дата</th><th>Текст</th><th>Файлы</th></tr>
+
+
+<% @date_po_up.each do |dd|
+  %>
+  <tr>
+    <td width=10%><%= dd.dd %></td>
+    <td>
+     <% @wo_post.where("date(created_at)=?",dd.dd).each do |pp| %>
+       <%=pp.text%><br><b> =<%= Staff.find(pp.staff_id).lname if Staff.exists?(pp.staff_id) %></b>
+     <% end %>
+    </td>
+    <td>
+      <% @wo_upload.where("date(created_at)=?",dd.dd).each do |up| %>
+        <img src=/paper-clip.png>
+        <a href=/uploads/<%=up.id%>><%= up.filename%></a> <%= (up.size.to_i/1024).to_i %>Kb</br>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

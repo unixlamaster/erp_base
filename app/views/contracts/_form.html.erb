@@ -1,0 +1,59 @@
+<%= form_for @contract do |f| %>
+  <% if @contract.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@contract.errors.count, "error") %> prohibited this storage post from
+ being saved:</h2>
+      <ul>
+      <% @contract.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="row">
+<div class="large-6 columns">
+<div class="row">
+  <div class="large-12 columns">
+    <b>Регион</b><br>
+    <%= f.text_field :region %>
+  </div>
+  </div>
+<div class="row">
+  <div class="large-12 columns">
+    <b>Заказчик</b><br>
+    <%= f.text_field :client %>
+  </div>
+  </div>
+<div class="row">
+  <div class="large-12 columns">
+    <b>Наименование договора</b><br>
+    <%= f.text_field :name %>
+  </div>
+  </div>
+<div class="row">
+  <div class="large-6 columns">
+    <b>Номер договора</b><br>
+    <%= f.text_field :c_number %>
+  </div>
+  <div class="large-6 columns">
+    <b>Дата договора</b><br>
+    <%= f.text_field :c_date, class:"datepicker" %>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <b>Ответственный</b><br>
+     <%= f.select :staff_id, Staff.all.collect {|st| [st.fullname ,st.id] }, {include_blank: true} %>
+  </div>
+  </div>
+<p>
+<div class="row">
+  <div class="large-12 columns">
+    <%= f.submit %>
+  </div>
+</div>
+  </div>
+</div>
+
+<% end %>

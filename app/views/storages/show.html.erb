@@ -1,0 +1,26 @@
+<div class="row display">
+ <div class="small-4 columns">
+<fieldset>
+    <legend><h4>Склад</h4></legend>
+<p>
+  <b>Наименование:</b>
+  <%= @storage.name %>
+</p>
+<p>
+  <b>Склад:</b>
+  <%= @storage.address %>
+</p>
+<p>
+  <b>Ед. изм.:</b>
+  <%= @storage.unit %>
+</p>
+<p>
+  <b>Количество:</b>
+  <%= @storage.mass %>
+</p>
+
+<%= link_to 'Edit', edit_storage_path(@storage) %> |
+<%= link_to 'Back', storage_path %>
+
+</fieldset>
+</div>

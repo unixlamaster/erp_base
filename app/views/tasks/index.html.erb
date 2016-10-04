@@ -1,0 +1,30 @@
+<% if flash[:error] %>
+    <div id="error_explanation"><h2><%= flash[:error] %></h2></div>
+<% end %>
+<div class="row display">
+  <div class="small-3 columns">
+    <h4><%=task_list(params[:state])%></h4>
+  </div>
+  <div class="small-3 columns">
+    <%= form_tag tasks_path, :method => 'get' do %>
+        <%= hidden_field_tag :direction, params[:direction] %>
+        <%= hidden_field_tag :sort, params[:sort] %>
+        <%= hidden_field_tag :state, params[:state] %>
+        <input name="search" size="20" type="text" value=<%=params[:search]%>>
+        </div>
+        <div class="small-3 columns">
+          <%= submit_tag "Найти", :name => nil %>
+    <% end %>
+    </div>
+    <div class="small-3 columns">
+      <%= link_to 'Добавить задачу', new_task_path, class: "button radius" %>
+    </div>
+    </div>
+<%= will_paginate @tasks %><br>
+<% if params[:state]=='delegate' %>
+     <%= render 'index_delegate' %>
+<% elsif params[:state]=='all' && (current_staff.is? :admin) %>
+     <%= render 'index_admin' %>
+<% else %>
+     <%= render 'index_user' %>
+<% end %>

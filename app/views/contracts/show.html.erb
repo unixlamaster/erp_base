@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Region:</b>
+  <%= @contract.region %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @contract.client %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @contract.name %>
+</p>
+
+<p>
+  <b>C number:</b>
+  <%= @contract.c_number %>
+</p>
+
+<p>
+  <b>C date:</b>
+  <%= @contract.c_date %>
+</p>
+
+<p>
+  <b>Staff:</b>
+  <%= @contract.staff_id %>
+</p>
+
+<p>
+  <b>Job hands:</b>
+  <%= @contract.job_hands %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @contract.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_contract_path(@contract) %> |
+<%= link_to 'Back', contracts_path %>

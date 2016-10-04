@@ -1,0 +1,43 @@
+<%= form_for(@upload) do |f| %>
+  <% if @upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:</h2>
+
+      <ul>
+      <% @upload.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <b>Выберите файл</b><br />
+    <%= f.file_field :filename %>
+  </div>
+<div class="row display">
+ <div class="small-4 columns">
+
+    <%= hidden_field_tag :flag, params[:flag] %>
+    <% case params[:flag]
+               when "wo"
+      %>
+                   <b>Объект</b><br />
+                   <%= f.select :workobject_id, Workobject.all.collect {|wo| [wo.fulladdr[0,60],wo.id] }, {include_blank: true, :selected=>params[:upload][:workobject_id]} %>
+                    <%= hidden_field_tag :ref, "/workobjects/#{params[:upload][:workobject_id]}" %>
+    <%         when "ts" %>
+                    <b>Задача</b><br />
+                    <%= f.select :task_id, Task.all.collect {|wo| [wo.description,wo.id] }, {include_blank: true,:selected=>params['task_id']} %>
+                    <%= hidden_field_tag :ref, "/tasks/#{params[:id]}" %>
+    <%         when "co"
+      %>
+                    <b>Контракты</b><br />
+                    <%= f.select :contract_id, Contract.all.collect {|co| [co.name[0,60],co.id] }, {include_blank: true} %>
+                    <%= hidden_field_tag :ref, "/uploads/?flag=co&upload[contract_id]=#{params[:upload][:contract_id]}".html_safe %>
+    <% end %>
+  </div>
+</div>
+  <div class="actions">
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>

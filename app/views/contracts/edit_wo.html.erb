@@ -1,0 +1,21 @@
+  <% if @c_wo_job.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@contract.errors.count, "error") %> prohibited this storage post from
+ being saved:</h2>
+      <ul>
+      <% @c_wo_job.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<p id="notice"><%= notice %></p>
+    <h4>Список Объектов</h4>
+<p>
+Редактирование объекта в контракте "<b><%=@contract.name%></b>"
+
+ <%= render 'c_wo_job_form' %>
+
+<%= link_to 'Back', contracts_path %>
+

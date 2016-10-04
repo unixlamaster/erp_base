@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th width=30%><%= sortable "description", "Описание" %></th>
+    <th width=15%><%= sortable "to_name", "Ответственный" %></th>
+    <th width=7%><%= sortable "sdate", "Начало" %></th>
+    <th width=7%><%= sortable "edate", "Окончание" %></th>
+    <th width=6%><%= sortable "progress", "% Выполнения" %></th>
+    <th width=5%><%= sortable "state", "Статус" %></th>
+  </tr>
+
+<% @tasks.each do |task| %>
+  <tr>
+    <td width=56%><%= tag("img", { :src => "/images/warning.png", :title =>'Горящая', :alt=>'Горящая',:border=>0}, false) if task.priority=="burn" %>
+<%= link_to task.description[0..80]+"...", "/tasks/#{task.id}",class: task.state[1..-1] %>
+    <%= link_to "( "+task.wo_fulladdr[0..20]+"...)", workobject_path(task.wo_id), class: task.state[1..-1] unless task.wo_id.nil? %></td>
+    <td width=15% class=<%=task.state[1..-1]%>><%= task.to_name %></td>
+    <td width=9%  class=<%=task.state[1..-1]%>><%= task.sdate %></td>
+    <td width=9% class=<%=task.state[1..-1]%>><%= task.edate %></td>
+    <td width=6% class=<%=task.state[1..-1]%>><%= task.progress %></td>
+    <td width=5% class=<%=task.state[1..-1]%>><%= task_status_hash[task.state] %></td>
+  </tr>
+<% end %>
+</table>

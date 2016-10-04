@@ -1,0 +1,39 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Объект" %>
+    <%= f.select :workobject_id, Workobject.all.collect {|wo| [wo.name+", "+wo.city+", "+wo.address,wo.id] }, {include_blank: true,:selected=>params['workobject_id']} %>
+  </div>
+  <div class="field">
+    <%= f.label "Руководитель" %>
+    <%= f.select :chif_id, Staff.where(status: "Работает").order("lname asc").all
+.collect {|st| [st.fullname ,st.id] }, {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label "Состав бригады" %>
+    <%= f.text_area :brigada %>
+  </div>
+  <div class="field">
+    <%= f.label "Наименование работ" %>
+    <%= f.text_area :text %>
+  </div>
+  <div class="field">
+    <%= f.label "Количество" %>
+    <%= f.text_area :amount %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <input type=hidden name=ref value=<%=params[:ref]%>>
+<% end %>

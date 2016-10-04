@@ -1,0 +1,19 @@
+<table>
+ <tr>
+ <th>Объект</th>
+ <th>Исполнитель</th>
+ <th>Статус</th>
+ </tr>
+ <tr>
+    <%= form_for(@c_wo_job, :url => @url, :html => { :method => :post }) do |f| %>
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :contract_id %>
+   <td>    <%= f.select :workobject_id, @workobjects.collect {|wo| [wo.name,wo.id]} %>
+   </td><td>
+          <%= f.text_field :job_hands %>
+   </td><td>
+          <%= f.select :status, workobject_status_list {|st| [st[1],st[0]] }, {include_blank: true}%>
+   </td></tr>
+</table>
+          <%= f.submit "Submit" %>
+    <% end %>
