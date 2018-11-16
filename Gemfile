@@ -25,7 +25,7 @@ group :assets do
   gem 'multi_json'
 end
 
-gem 'jquery-rails', "~> 2.3.0"
+gem 'jquery-rails', ">= 3.1.3"
 gem 'jquery-ui-rails'
 gem 'jquery-datatables-rails'
 
